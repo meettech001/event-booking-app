@@ -48,4 +48,20 @@ class BookingService
             ]);
         });
     }
+
+
+    public function getBookings($data, $user){
+        $event = Events::with('bookings')->where('user_id', $user->id)->where('id', $data['event_id'])->first();
+
+        if(!$event){
+            throw ValidationException::withMessages([
+                'event_id' => ['Event not found.'],
+            ]);
+        }
+
+        $eventData = $event->toArray();
+        $eventData['bookingcount'] = count($eventData['bookings']);
+
+        return $eventData;
+    }
 }

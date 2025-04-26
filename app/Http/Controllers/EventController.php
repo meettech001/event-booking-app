@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Events;
+use App\Services\BookingService;
 use Exception;
 use Illuminate\Console\Scheduling\Event as SchedulingEvent;
 use Illuminate\Support\Facades\Validator;
@@ -135,6 +136,7 @@ class EventController extends Controller
             'start_time'  => 'required|date',
             'end_time'    => 'required|date|after_or_equal:start_time',
             'capacity'   =>  'required|integer',
+            'country'    => 'required|in:in,uk,usa',
         ]);
 
         if ($validator->fails()) {
@@ -144,7 +146,7 @@ class EventController extends Controller
             ], 422);
         }
         $event = Events::create([
-            'country'     => 'en',
+            'country'     => $request->country,
             'capacity'    => $request->capacity,
             'user_id'     => $request->user()->id,
             'title'       => $request->title,
@@ -219,6 +221,8 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'start_time'  => 'required|date',
             'end_time'    => 'required|date|after_or_equal:start_time',
+            'capacity'   =>  'required|integer',
+            'country'    => 'required|in:in,uk,usa',
         ]);
 
         if ($validator->fails()) {
@@ -278,5 +282,29 @@ class EventController extends Controller
         $event->delete();
 
         return response()->json(['message' => 'Event deleted successfully']);
+    }
+
+    public function showBookings(Request $request, BookingService $bookingService)
+    {
+        // Validate input
+        $validator = Validator::make($request->all(), [
+            'event_id'    => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        try {
+            $booking = $bookingService->getBookings($validator->validated(), $request->user());
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'errors' => $e->getMessage()], 422);
+        }
+
+        // Return response
+        return response()->json([
+            'message' => 'Bookings fetched successfully',
+            'data' => $booking,
+        ], 201);
     }
 }

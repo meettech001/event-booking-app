@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('country');
+            $table->enum('country', ['in', 'uk', 'usa'])->default('in');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->unsignedInteger('capacity');

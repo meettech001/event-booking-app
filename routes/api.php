@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/event/create', [EventController::class, 'create']);
     Route::post('/event/update/{id}', [EventController::class, 'update']);
     Route::delete('/event/remove/{id}', [EventController::class, 'remove']);
+    Route::post('/event/show-bookings', [EventController::class, 'showBookings']);
 
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
