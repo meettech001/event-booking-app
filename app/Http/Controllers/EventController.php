@@ -284,6 +284,50 @@ class EventController extends Controller
         return response()->json(['message' => 'Event deleted successfully']);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/bookings/show",
+     *     summary="Fetch bookings for an event",
+     *     description="Retrieve all bookings for a given event by event_id.",
+     *     operationId="showBookings",
+     *     tags={"Bookings"},
+     *     security={{"sanctum": {}}},
+     *     
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"event_id"},
+     *             @OA\Property(property="event_id", type="integer", example=1, description="ID of the event"),
+     *         )
+     *     ),
+     *     
+     *     @OA\Response(
+     *         response=201,
+     *         description="Bookings fetched successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Bookings fetched successfully"),
+     *             @OA\Property(property="data", type="array", @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="attendee_id", type="integer", example=5),
+     *                 @OA\Property(property="event_id", type="integer", example=1),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-04-25T09:00:00Z"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-04-25T09:00:00Z"),
+     *             ))
+     *         )
+     *     ),
+     *     
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error or business logic error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="errors", type="string", example="Event not found or unauthorized")
+     *         )
+     *     )
+     * )
+     */
+
     public function showBookings(Request $request, BookingService $bookingService)
     {
         // Validate input

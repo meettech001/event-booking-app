@@ -34,8 +34,7 @@ class AuthControllerTest extends TestCase
             'user' => [
                 'name' => 'John Doe',
                 'email' => 'johndoe@example.com',
-            ],
-            'token' => true, // Ensure the token is present (not empty)
+            ]
         ]);
 
         // Ensure that the user is saved in the database

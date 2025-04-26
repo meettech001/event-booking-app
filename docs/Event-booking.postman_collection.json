@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "462177d6-5682-4944-a435-7f77971351df",
+		"name": "Event-booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1222816",
+		"_collection_link": "https://grey-rocket-777227.postman.co/workspace/251b5251-7b2f-4f0d-9a51-7c48d1fc28b8/collection/1222816-462177d6-5682-4944-a435-7f77971351df?action=share&source=collection_link&creator=1222816"
+	},
+	"item": [
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Laravel Meetup\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/events",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show-bookings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/event/show-bookings",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"event",
+								"show-bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5|v27WgPO5Mp7qjYmneq1U6VmUmQhfu6OVozBco8cF238ef90b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Laravel Meetup\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/event/create",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"event",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Laravel Meetup1\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/event/update/1",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"event",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove-event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Laravel Meetup\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/event/remove/1",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"event",
+								"remove",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendees",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Kiara\",\n    \"email\":\"kiara@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/attendee/register",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"attendee",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "events",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"laravel\",\n    \"country\":\"\", //[in,uk]\n    \"start_time\":\"2025-04-12\", // [yyyy-mm-dd]\n    \"end_time\":\"2025-04-12\" // [yyyy-mm-dd]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/attendee/events",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"attendee",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "book-event",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attendee_id\":2,\n    \"event_id\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-url}}api/booking/book-event",
+							"host": [
+								"{{api-url}}api"
+							],
+							"path": [
+								"booking",
+								"book-event"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"anjali2@gmail.com\",\n  \"password\": \"anjali@12345\",\n  \"password_confirmation\": \"anjali@12345\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://13.event-booking.mit/api/register",
+					"protocol": "http",
+					"host": [
+						"13",
+						"event-booking",
+						"mit"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"pm.environment.set(\"token\", jsonData.token); // or jsonData.access_token if that’s the key",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"meettech001@gmail.com\",\n    \"password\": \"meet@12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}api/login",
+					"host": [
+						"{{api-url}}api"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
