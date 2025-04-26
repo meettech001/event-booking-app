@@ -1,61 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Event Booking App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Welcome to the **Event Booking App**. Follow the steps below to set up the project on your local machine.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Setup Instructions
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **Clone the Git Repository**
+    ```bash
+    git clone https://github.com/meettech001/event-booking-app.git
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. **Create `.env` File**
+    - Copy the content from `.env.example` and paste it into a new `.env` file.
 
-## Learning Laravel
+3. **Set Up Local Domain (Ubuntu)**
+    - Edit your hosts file:
+      ```bash
+      sudo nano /etc/hosts
+      ```
+    - Append this line at the end:
+      ```
+      127.0.0.1 13.symfony-test.mit 13.event-booking.mit
+      ```
+    - Save and exit.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. **Give Permissions to the Storage Folder**
+    ```bash
+    sudo chmod 777 -R storage
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5. **Ensure Docker & Docker Compose Are Installed**
+    - Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) if not already installed.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+6. **Build and Start Docker Containers**
+    - Navigate to the project directory:
+      ```bash
+      sudo docker compose build && sudo docker compose up -d
+      ```
 
-## Laravel Sponsors
+7. **Access Web Container**
+    - List running containers:
+      ```bash
+      sudo docker ps
+      ```
+    - Enter the web container:
+      ```bash
+      sudo docker exec -it <container-name> bash
+      ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+8. **Run Migrations and Seeders (Inside Container)**
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
 
-### Premium Partners
+9. **Run Tests (Inside Container)**
+    ```bash
+    php artisan test
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 📚 API Documentation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Swagger UI**:  
+  [http://13.event-booking.mit/api/documentation](http://13.event-booking.mit/api/documentation)
 
-## Code of Conduct
+## 📬 Postman Collection
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **File Path**:  
+    docs/Event-booking.postman_collection.json
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🛠 Tech Stack
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Laravel
+- PHP 8+
+- Docker
+- MySQL
+- Sanctum Authentication
+- Swagger (OpenAPI) Documentation
+
+---
+
+## 📣 Notes
+
+- Always run Artisan commands like migrations, seeding, and testing **inside the Web container**.
+- Ensure the `.env` file database credentials match your Docker settings.
+
+---
+
+## ✅ Quick Commands
+
+| Purpose          | Command |
+| ---------------- | ------- |
+| Migrate & Seed   | `php artisan migrate:fresh --seed` |
+| Run Tests        | `php artisan test` |
+| Open Web Container | `sudo docker exec -it <container-name> bash` |
+| Stop Containers  | `sudo docker compose down` |
+
+---
