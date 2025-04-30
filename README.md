@@ -21,7 +21,7 @@ Welcome to the **Event Booking App**. Follow the steps below to set up the proje
       ```
     - Append this line at the end:
       ```
-      127.0.0.1 13.symfony-test.mit 13.event-booking.mit
+      127.0.0.1 13.event-booking.mit
       ```
     - Save and exit.
 
