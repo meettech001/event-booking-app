@@ -84,4 +84,32 @@ class BookingControllerTest extends TestCase
             'errors' => 'Booking failed.'
         ]);
     }
+
+    #[Test]
+    public function test_book_event_handles_booking_service_exception()
+    {
+        // Fake request payload
+        $payload = [
+            'event_id' => 999,
+            'attendee_id' => 888,
+        ];
+
+        // Mock BookingService
+        $bookingServiceMock = \Mockery::mock(BookingService::class);
+        $bookingServiceMock->shouldReceive('book')
+            ->once()
+            ->with($payload)
+            ->andThrow(new \Exception('Booking failed due to unknown error.'));
+
+        $this->app->instance(BookingService::class, $bookingServiceMock);
+
+        // Make the POST request
+        $response = $this->postJson('/api/booking/book-event', $payload);
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'success' => false,
+            'errors' => 'Booking failed due to unknown error.',
+        ]);
+    }
 }

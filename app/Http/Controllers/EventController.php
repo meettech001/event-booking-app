@@ -232,12 +232,7 @@ class EventController extends Controller
             ], 422);
         }
 
-        try {
-            Events::updateEvent($event, $request);
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-
+        Events::updateEvent($event, $request);
 
         return response()->json([
             'message' => 'Event updated successfully',
@@ -286,7 +281,7 @@ class EventController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/bookings/show",
+     *     path="/api/event/show-bookings",
      *     summary="Fetch bookings for an event",
      *     description="Retrieve all bookings for a given event by event_id.",
      *     operationId="showBookings",

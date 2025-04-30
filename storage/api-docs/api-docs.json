@@ -912,7 +912,7 @@
                 ]
             }
         },
-        "/api/bookings/show": {
+        "/api/event/show-bookings": {
             "post": {
                 "tags": [
                     "Bookings"
