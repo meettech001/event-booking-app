@@ -67,10 +67,10 @@ class Events extends Model
             $query->where("country", $request->country);
         }
         if ($request->start_time != "") {
-            $query->where("start_time", '>=', $request->start_time);
+            $query->whereDate("start_time", '>=', $request->start_time);
         }
         if ($request->end_time != "") {
-            $query->where("end_time", '<=', $request->end_time);
+            $query->whereDate("end_time", '<=', $request->end_time);
         }
 
         $records  = $query->paginate(10);

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Attendee;
 use App\Models\Events;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -27,11 +28,17 @@ class BookingService
             ]);
         }
 
+        //Booking fails if the event date has passed
+        if($event->start_time < date("Y-m-d H:i:s")){
+            throw ValidationException::withMessages([
+                'event_id' => ['Cannot book a past event.'],
+            ]);
+        }
 
         // Check for overbooking
         if ($event->bookings()->count() >= $event->capacity) {
             throw ValidationException::withMessages([
-                'event_id' => ['Event is fully booked.'],
+                'event_id' => ['Event has no available slots.'],
             ]);
         }
 
@@ -42,11 +49,21 @@ class BookingService
             ]);
         }
 
-        return DB::transaction(function () use ($event, $attendee) {
-            return $event->bookings()->create([
-                'attendee_id' => $attendee->id,
-            ]);
-        });
+
+        $lock = Cache::lock("event_booking_{$event->id}", 10);
+
+        try {
+            if ($lock->get()) {
+                return DB::transaction(function () use ($event, $attendee) {
+                    return $event->bookings()->create([
+                        'attendee_id' => $attendee->id,
+                    ]);
+                });
+            }
+        } finally {
+            optional($lock)->release();
+        }
+
     }
 
 

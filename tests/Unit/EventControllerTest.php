@@ -155,6 +155,7 @@ class EventControllerTest extends TestCase
         ]);
 
         $payload = [
+            'user_id'     => $user->id,
             'title'       => 'Updated Event Title',
             'description' => 'Updated description.',
             'start_time'  => now()->addDays(2)->toDateTimeString(),

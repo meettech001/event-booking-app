@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,12 +17,14 @@ class EventsFactory extends Factory
      */
     public function definition(): array
     {
+        $start = $this->faker->dateTimeBetween('now', '+3 months');
+
         return [
             'user_id'    => 1, // You can set this to a valid user ID or use a factory for user.
             'title'      => $this->faker->sentence,
             'description'=> $this->faker->paragraph,
-            'start_time' => $this->faker->dateTime,
-            'end_time'   => $this->faker->dateTime,
+            'start_time' => $start,
+            'end_time'   => Carbon::instance($start)->addHours(rand(1, 48)),
             'capacity'   => $this->faker->numberBetween(10, 500),
             'country'    => $this->faker->randomElement(['in', 'uk', 'usa']),
         ];

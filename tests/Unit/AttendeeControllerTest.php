@@ -63,15 +63,18 @@ class AttendeeControllerTest extends TestCase
         $user = User::factory()->create();
 
         Events::factory()->count(3)->create([
+            'title' => 'Test Title',
             'user_id' => $user->id,
             'country' => 'uk',
             'start_time' => '2025-06-01 10:00:00',
-            'end_time' => '2025-06-02 10:00:00',
+            'end_time' => '2025-06-05 10:00:00',
         ]);
 
         $payload = [
+            'title' => 'Test',
             'country' => 'uk',
             'start_time' => '2025-06-01',
+            'end_time' => '2025-06-05',
         ];
 
         $response = $this->actingAs($user)->postJson('/api/attendee/events', $payload);

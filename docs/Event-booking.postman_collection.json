@@ -4,7 +4,7 @@
 		"name": "Event-booking",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "1222816",
-		"_collection_link": "https://grey-rocket-777227.postman.co/workspace/251b5251-7b2f-4f0d-9a51-7c48d1fc28b8/collection/1222816-462177d6-5682-4944-a435-7f77971351df?action=share&source=collection_link&creator=1222816"
+		"_collection_link": "https://grey-rocket-777227.postman.co/workspace/Bethere~251b5251-7b2f-4f0d-9a51-7c48d1fc28b8/collection/1222816-462177d6-5682-4944-a435-7f77971351df?action=share&source=collection_link&creator=1222816"
 	},
 	"item": [
 		{
@@ -24,7 +24,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"title\": \"Laravel Meetup\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
@@ -63,7 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \n}",
+							"raw": "{\n    \"event_id\":1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -134,7 +140,13 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"title\": \"Laravel Meetup1\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
@@ -172,7 +184,13 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"title\": \"Laravel Meetup\",\n  \"description\": \"A cool event on Laravel\",\n  \"start_time\": \"2025-04-30 14:00:00\",\n  \"end_time\": \"2025-04-30 17:00:00\",\n  \"capacity\": 120\n}",
@@ -238,7 +256,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\":\"laravel\",\n    \"country\":\"\", //[in,uk]\n    \"start_time\":\"2025-04-12\", // [yyyy-mm-dd]\n    \"end_time\":\"2025-04-12\" // [yyyy-mm-dd]\n    }",
+							"raw": "{\n    \"title\": \"laravel\",\n    \"country\": \"in\", //[in,uk,usa]\n    \"start_time\": \"2025-06-08\", // [yyyy-mm-dd]\n    \"end_time\": \"2025-06-30\" // [yyyy-mm-dd]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
