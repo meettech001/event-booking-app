@@ -229,7 +229,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"Kiara\",\n    \"email\":\"kiara@gmail.com\"\n}",
+							"raw": "{\n    \"name\":\"Kiara1\",\n    \"email\":\"kiara111qq1q4@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -253,10 +253,16 @@
 					"name": "events",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"laravel\",\n    \"country\": \"in\", //[in,uk,usa]\n    \"start_time\": \"2025-06-08\", // [yyyy-mm-dd]\n    \"end_time\": \"2025-06-30\" // [yyyy-mm-dd]\n}",
+							"raw": "{\n    \"title\": \"\",\n    \"country\": \"in\", //[in,uk,usa]\n    \"start_time\": \"2025-06-08\", // [yyyy-mm-dd]\n    \"end_time\": \"2025-06-30\" // [yyyy-mm-dd]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -317,10 +323,16 @@
 			"name": "Register",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"anjali2@gmail.com\",\n  \"password\": \"anjali@12345\",\n  \"password_confirmation\": \"anjali@12345\"\n}\n",
+					"raw": "{\n  \"name\": \"Mitesh Vasava\",\n  \"email\": \"mitesh@gmail.com\",\n  \"password\": \"mitesh@12345\",\n  \"password_confirmation\": \"mitesh@12345\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -328,15 +340,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://13.event-booking.mit/api/register",
-					"protocol": "http",
+					"raw": "{{api-url}}api/register",
 					"host": [
-						"13",
-						"event-booking",
-						"mit"
+						"{{api-url}}api"
 					],
 					"path": [
-						"api",
 						"register"
 					]
 				}
@@ -361,10 +369,16 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"meettech001@gmail.com\",\n    \"password\": \"meet@12345\"\n}",
+					"raw": "{\n    \"email\": \"miteshgmail.com\",\n    \"password\": \"mitesh@12345\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

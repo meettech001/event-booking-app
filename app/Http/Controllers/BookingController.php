@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookingRequest;
 use App\Services\BookingService;
 use Exception;
 use Illuminate\Http\Request;
@@ -46,24 +47,14 @@ class BookingController extends Controller
      * )
      */
 
-    public function bookEvent(Request $request, BookingService $bookingService)
+    public function bookEvent(BookingRequest $request, BookingService $bookingService)
     {
-        // Validate input
-        $validator = Validator::make($request->all(), [
-            'attendee_id' => 'required|integer',
-            'event_id'    => 'required|integer',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
 
         try {
-            $booking = $bookingService->book($validator->validated());
+            $booking = $bookingService->book($request->validated());
         } catch (Exception $e) {
             return response()->json(['success' => false, 'errors' => $e->getMessage()], 422);
         }
-
 
         // Return response
         return response()->json([

@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attendee;
 use App\Models\Events;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\AttendeeService;
+use App\Http\Requests\RegisterAttendeeRequest;
+use App\Http\Requests\SearchEventRequest;
+use App\Repositories\EventRepository;
 
 class AttendeeController extends Controller
 {
+    protected AttendeeService $attendeeService;
+    protected EventRepository $eventRepo;
+
+    public function __construct(AttendeeService $attendeeService, EventRepository $eventRepo)
+    {
+        $this->attendeeService = $attendeeService;
+        $this->eventRepo = $eventRepo;
+    }
+
     /**
      * @OA\Post(
      *     path="/api/attendee/register",
@@ -44,32 +56,13 @@ class AttendeeController extends Controller
      * )
      */
 
-    public function register(Request $request)
+    public function register(RegisterAttendeeRequest $request, AttendeeService $attendeeService)
     {
-        // Validate input
-        $validator = Validator::make($request->all(), [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|unique:attendee',
-        ], [
-            'email.required' => 'Email is required.',
-            'email.email'    => 'Please enter a valid email address.',
-            'email.unique'   => 'You\'re already registered with given email. Please try with diffrent email.',
-        ]);
+        $attendee = $this->attendeeService->register($request->validated());
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Create Attendee
-        $user = Attendee::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-        ]);
-
-        // Return response
         return response()->json([
             'message' => 'You\'re registered successfully',
-            'user'    => $user,
+            'user'    => $attendee,
         ], 201);
     }
 
@@ -137,20 +130,10 @@ class AttendeeController extends Controller
      * )
      */
 
-    public function events(Request $request)
+    public function events(SearchEventRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'nullable|string',
-            'country' => 'nullable|in:in,uk,usa',
-            'start_time' => 'nullable|date_format:Y-m-d',
-            'end_time' => 'nullable|date_format:Y-m-d',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $events = Events::getEventsByCriteria($request);
+        
+        $events = $this->eventRepo->getEventsByCriteria($request);
 
         if ($events->isEmpty()) {
             return response()->json([

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Events;
+use App\Repositories\EventRepository;
 use App\Services\BookingService;
 use Exception;
 use Illuminate\Console\Scheduling\Event as SchedulingEvent;
@@ -13,6 +16,12 @@ use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
+    protected EventRepository $eventRepo;
+
+    public function __construct(EventRepository $eventRepo)
+    {
+        $this->eventRepo = $eventRepo;
+    }
     /**
      * @OA\Post(
      *     path="/api/events",
@@ -128,32 +137,9 @@ class EventController extends Controller
      * )
      */
 
-    public function create(Request $request)
+    public function create(CreateEventRequest $request)
     {
-        $validator =  Validator::make($request->all(), [
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_time'  => 'required|date',
-            'end_time'    => 'required|date|after_or_equal:start_time',
-            'capacity'   =>  'required|integer',
-            'country'    => 'required|in:in,uk,usa',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
-            ], 422);
-        }
-        $event = Events::create([
-            'country'     => $request->country,
-            'capacity'    => $request->capacity,
-            'user_id'     => $request->user()->id,
-            'title'       => $request->title,
-            'description' => $request->description ?? null,
-            'start_time'  => $request->start_time,
-            'end_time'    => $request->end_time,
-        ]);
+        $event = $this->eventRepo->create($request);
 
         return response()->json([
             'message' => 'Event created successfully.',
@@ -208,31 +194,15 @@ class EventController extends Controller
      * )
      */
 
-    public function update(Request $request, $id)
+    public function update(UpdateEventRequest $request, $id)
     {
         $event = Events::where('id', $id)->where('user_id', $request->user()->id)->first();
 
         if (!$event) {
             return response()->json(['message' => 'Event not found or unauthorized'], 404);
         }
-
-        $validator =  Validator::make($request->all(), [
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_time'  => 'required|date',
-            'end_time'    => 'required|date|after_or_equal:start_time',
-            'capacity'   =>  'required|integer',
-            'country'    => 'required|in:in,uk,usa',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors(),
-            ], 422);
-        }
-
-        Events::updateEvent($event, $request);
+        
+        $this->eventRepo->update($event, $request);
 
         return response()->json([
             'message' => 'Event updated successfully',
