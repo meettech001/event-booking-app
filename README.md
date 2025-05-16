@@ -71,8 +71,10 @@ Welcome to the **Event Booking App**. Follow the steps below to set up the proje
   and run below command:
   php artisan l5-swagger:generate
   ```
+  ![Screenshot from 2025-05-16 20-52-33](https://github.com/user-attachments/assets/678dafa3-8f0b-4adf-b7b4-be275ae6c1ff)
 
-## 📬 Postman Collection
+## 📬 Postman ![Uploading Screenshot from 2025-05-16 20-52-33.png…]()
+Collection
 
 - **File Path**:  
     docs/Event-booking.postman_collection.json
