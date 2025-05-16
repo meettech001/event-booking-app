@@ -65,6 +65,12 @@ Welcome to the **Event Booking App**. Follow the steps below to set up the proje
 
 - **Swagger UI**:  
   [http://13.event-booking.mit/api/documentation](http://13.event-booking.mit/api/documentation)
+  -To access url do following steps:
+  ```bash
+  sudo docker exec -it <web-container-name> bash
+  and run below command:
+  php artisan l5-swagger:generate
+  ```
 
 ## 📬 Postman Collection
 
