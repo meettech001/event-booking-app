@@ -97,8 +97,8 @@ class BookingService
         }
 
         $eventData = $event->toArray();
-        $eventData['bookingcount'] = count($eventData['bookings']);
+        $event->bookingcount = count($eventData['bookings']);
 
-        return $eventData;
+        return $event;
     }
 }

@@ -166,10 +166,10 @@ class EventControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson("/api/event/update/{$event->id}", $payload);
 
-        $response->assertStatus(200)
+        $response->assertStatus(201)
             ->assertJson([
-                'message' => 'Event updated successfully',
-                'event' => [
+                'message' => 'Event updated successfully.',
+                'data' => [
                     'title' => 'Updated Event Title',
                     'country' => 'uk',
                     'capacity' => 150,
@@ -278,8 +278,36 @@ class EventControllerTest extends TestCase
         $mockService->shouldReceive('getBookings')
             ->once()
             ->with(['event_id' => $event->id], $user)
-            ->andReturn([
-                ['id' => 1, 'event_id' => $event->id, 'attendee' => 'John Doe']
+            ->andReturn((object)[ // Mimic the structure of your actual event with bookings
+                'id' => $event->id,
+                'user_id' => $user->id,
+                'title' => 'Laravqqel Meetup1',
+                'description' => 'A cool event on Laravel',
+                'country' => 'in',
+                'start_time' => '2025-04-30 14:00:00',
+                'end_time' => '2025-04-30 17:00:00',
+                'capacity' => 120,
+                'bookings' => [
+                    [
+                        'id' => 39,
+                        'event_id' => $event->id,
+                        'attendee_id' => 3,
+                        'created_at' => '2025-05-16 16:36:31'
+                    ],
+                    [
+                        'id' => 40,
+                        'event_id' => $event->id,
+                        'attendee_id' => 1,
+                        'created_at' => '2025-05-16 16:36:37'
+                    ],
+                    [
+                        'id' => 41,
+                        'event_id' => $event->id,
+                        'attendee_id' => 2,
+                        'created_at' => '2025-05-16 16:36:42'
+                    ]
+                ],
+                'bookingcount' => 3
             ]);
 
         $this->app->instance(BookingService::class, $mockService);
@@ -288,14 +316,21 @@ class EventControllerTest extends TestCase
             'event_id' => $event->id,
         ]);
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
             ->assertJson([
                 'message' => 'Bookings fetched successfully',
                 'data' => [
-                    ['id' => 1, 'event_id' => $event->id, 'attendee' => 'John Doe']
+                    'id' => $event->id,
+                    'bookings' => [
+                        ['id' => 39, 'event_id' => $event->id, 'attendee_id' => 3],
+                        ['id' => 40, 'event_id' => $event->id, 'attendee_id' => 1],
+                        ['id' => 41, 'event_id' => $event->id, 'attendee_id' => 2],
+                    ],
+                    'bookingcount' => 3,
                 ],
             ]);
     }
+
 
     #[Test]
     public function test_show_bookings_fails_validation()

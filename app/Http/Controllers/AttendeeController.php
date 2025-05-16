@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\AttendeeService;
 use App\Http\Requests\RegisterAttendeeRequest;
 use App\Http\Requests\SearchEventRequest;
+use App\Http\Resources\AttendeeResource;
+use App\Http\Resources\EventResource;
+use App\Http\Resources\EventResourceCollection;
 use App\Repositories\EventRepository;
 
 class AttendeeController extends Controller
@@ -60,10 +63,7 @@ class AttendeeController extends Controller
     {
         $attendee = $this->attendeeService->register($request->validated());
 
-        return response()->json([
-            'message' => 'You\'re registered successfully',
-            'user'    => $attendee,
-        ], 201);
+        return new AttendeeResource($attendee);
     }
 
     /**
@@ -143,16 +143,6 @@ class AttendeeController extends Controller
             ]);
         }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Event list fetched successfully',
-            'data' => $events->items(), // Just the current page's data
-            'pagination' => [
-                'total' => $events->total(),
-                'per_page' => $events->perPage(),
-                'current_page' => $events->currentPage(),
-                'last_page' => $events->lastPage(),
-            ],
-        ]);
+        return new EventResourceCollection($events);
     }
 }

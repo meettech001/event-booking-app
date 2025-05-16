@@ -27,10 +27,13 @@ class BookingControllerTest extends TestCase
         $this->actingAs($user);
 
         $mockBookingService = Mockery::mock(BookingService::class);
-        $mockBookingService->shouldReceive('book')->once()->andReturn([
+        $mockBookingService->shouldReceive('book')->once()->andReturn((object) [
+            'id' => 42,
             'attendee_id' => $attendee->id,
             'event_id' => $event->id,
+            'created_at' => now(),
         ]);
+
 
         $this->app->instance(BookingService::class, $mockBookingService);
 

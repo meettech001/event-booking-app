@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Http\Resources\BookingResource;
+use App\Http\Resources\EventBookingDetailResource;
+use App\Http\Resources\EventCollection;
+use App\Http\Resources\EventResource;
+use App\Http\Resources\EventResourceCollection;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Events;
@@ -86,17 +91,7 @@ class EventController extends Controller
             ]);
         }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Event list fetched successfully',
-            'data' => $events->items(), // Just the current page's data
-            'pagination' => [
-                'total' => $events->total(),
-                'per_page' => $events->perPage(),
-                'current_page' => $events->currentPage(),
-                'last_page' => $events->lastPage(),
-            ],
-        ]);
+        return new EventResourceCollection($events);
     }
 
     /**
@@ -141,10 +136,8 @@ class EventController extends Controller
     {
         $event = $this->eventRepo->create($request);
 
-        return response()->json([
-            'message' => 'Event created successfully.',
-            'data'    => $event
-        ], 201);
+        return (new EventResource($event))->additional(['message' => 'Event created successfully.'])->response()->setStatusCode(201);
+
     }
 
     /**
@@ -204,10 +197,7 @@ class EventController extends Controller
         
         $this->eventRepo->update($event, $request);
 
-        return response()->json([
-            'message' => 'Event updated successfully',
-            'event'   => $event,
-        ]);
+        return (new EventResource($event))->additional(['message' => 'Event updated successfully.'])->response()->setStatusCode(201);
     }
 
     /**
@@ -311,9 +301,11 @@ class EventController extends Controller
         }
 
         // Return response
-        return response()->json([
-            'message' => 'Bookings fetched successfully',
-            'data' => $booking,
-        ], 201);
+        return (new EventBookingDetailResource($booking))
+            ->additional(['message' => 'Bookings fetched successfully'])
+            ->response()
+            ->setStatusCode(200);
+
+        
     }
 }

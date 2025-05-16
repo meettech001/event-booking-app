@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookingRequest;
+use App\Http\Resources\BookingResource;
 use App\Services\BookingService;
 use Exception;
 use Illuminate\Http\Request;
@@ -56,10 +57,6 @@ class BookingController extends Controller
             return response()->json(['success' => false, 'errors' => $e->getMessage()], 422);
         }
 
-        // Return response
-        return response()->json([
-            'message' => 'You\'re booked event successfully',
-            'booking' => $booking,
-        ], 201);
+        return new BookingResource($booking);
     }
 }
